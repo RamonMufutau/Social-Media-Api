@@ -213,7 +213,18 @@ const getPosts = async (req, res) => {
             },
             attributes: ['post_id', 'post', 'createdAt', 'updatedAt']
         });
-        const FullRecord = await Promise.all(allPosts.map(async (post) => { 
+        [
+                {
+                post_id: '1',
+                post: 'this is a post',
+            },
+            {
+                post_id: '2',
+                post: 'this is another post',
+                }
+        ]
+        const FullRecord = await Promise.all(
+            allPosts.map(async (post) => { 
             const comments = await models.Comments.findAll({
                 where: {
                     post_id: post.dataValues.post_id
@@ -233,7 +244,7 @@ const getPosts = async (req, res) => {
         res.status(200).json({
             status: true,
             message: 'Posts retrieved successfully',
-            data: FullRecord
+            data: `FullRecord`
         })
     }catch(err) { 
         res.status(500).json({
@@ -393,6 +404,7 @@ const login = async (req, res) => {
             email: user.dataValues.email_address,
             _id: uuidv4()
         }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
         res.status(200).json({
             status: true,
             message: 'User logged in successfully',

@@ -6,7 +6,7 @@ const authorization = (req, res, next) => {
 
     const { authorization } = req.headers
     try {
-        if (!authorization) throw new Error('Unauthorized Access')
+        if (!authorization) throw new Error('Unauthorized Access......')
         
         const tokenSplit = authorization.split(" ")
         jwt.verify(tokenSplit[1], process.env.JWT_SECRET,

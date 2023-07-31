@@ -8,11 +8,45 @@ const {
 } = require("../controllers");
 const {authorization} = require('../middlewares/authorization')
 
+/**
+ * register a new customer
+ * @swagger
+ * /api/v1/create:
+ *   post:
+ *     summary: creates a new account
+ *     description: This Creates a new record for the customer
+ *     tags:
+ *       - Account
+ *     produces:	 
+ *       - application/json	 
+ *     parameters:	 
+ *       - name: surname	 
+ *         in: body	 
+ *         required: true
+ *       - name: othernames	 
+ *         in: body	 
+ *         required: true
+ *       - name: email_address	 
+ *         in: body	 
+ *         required: true
+ *       - name: phone_number	 
+ *         in: body	 
+ *         required: true
+ *       - name: password	 
+ *         in: body	 
+ *         required: true  
+ *     responses:
+ *        201:
+ *          description: Account created.
+ *        422:
+ *          Bad Request
+*/
 //login
 router.post("/login", login);
 
 //users routes
 router.post("/register", register);
+
 router.get("/profile", authorization, profile);
 router.patch("/profile", authorization, updateProfile);
 
