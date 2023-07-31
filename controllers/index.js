@@ -15,8 +15,8 @@ models.Users.hasMany(models.Post, { foreignKey: 'user_id' });
 models.Post.belongsTo(models.Users, { foreignKey: 'user_id' });
 models.Users.hasMany(models.Comments, { foreignKey: 'user_id' });
 models.Comments.belongsTo(models.Users, { foreignKey: 'user_id' });
-models.Comments.hasMany(models.Reactions, { foreignKey: 'post_id' });
-models.Reactions.belongsTo(models.Comments, { foreignKey: 'post_id' });
+models.Post.hasMany(models.Reactions, { foreignKey: 'post_id' });
+models.Reactions.belongsTo(models.Post, { foreignKey: 'post_id' });
 //users
 const register = async (req, res) => { 
 
@@ -26,7 +26,11 @@ const register = async (req, res) => {
         const validateData = validateRegister(req.body);
         if (validateData.error) {
             res.status(400)
-            throw new Error(validateData.error.details[0].message);
+           
+            throw new Error({
+                code: 400,
+                message: validateData.error.details[0].message
+            });
         }
         //check if the user already exists
         const user = await models.Users.findOne({
@@ -35,8 +39,11 @@ const register = async (req, res) => {
             }
         })
         if (user) {
-            res.status(400)
-            throw new Error('User already exists');
+          
+            throw new Error({
+                code: 400,
+                message:'User already exists'
+            });
         }
         //create the user
         const { hash, salt } = await hashPassword(password);
@@ -56,9 +63,10 @@ const register = async (req, res) => {
 
 
     } catch (err) { 
-        res.json({
+        const { code, message } = err
+        res.status(code || 500).json({
             status: false,
-            message: err.message
+            message: message || 'Something went wrong'
         });
     }
 

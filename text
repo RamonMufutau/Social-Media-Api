@@ -1,6 +1,6 @@
 create model-migration
 
-npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
+npx sequelize-cli model:generate --name Ours --attributes ours_name:string,lastName:string,email:string
 
 
 create seeder file

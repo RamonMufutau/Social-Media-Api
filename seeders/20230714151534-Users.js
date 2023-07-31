@@ -13,7 +13,8 @@ module.exports = {
      * }], {});
     */
     
-    await queryInterface.bulkInsert('Users', [{
+    await queryInterface.bulkInsert('Users', [
+      {
       user_id: uuidv4(),
       surname: 'John',
       othernames: ' Doe Ayodeji',
@@ -21,7 +22,7 @@ module.exports = {
       username: 'johndeji',
       password_hash: '$2b$10$VA4L9Cl7QZ8wNKyilryRJupsx.UtZK/mv7tEujv5PNG...',
       password_salt: '$2b$10$VA4L9Cl7QZ8wNKyilryRJu'
-     }], {});
+      }], {});
   },
 
   async down (queryInterface, Sequelize) {
